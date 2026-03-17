@@ -194,7 +194,7 @@ async function loadMemes() {
   container.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text2);">加载梗图中...</p>';
 
   try {
-    const res = await fetch('memes.json?t=' + Date.now()); // 防止缓存
+    const res = await fetch('./memes.json?t=' + Date.now()); // 防止缓存
     const memes = await res.json();
 
     container.innerHTML = "";
