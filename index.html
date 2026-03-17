@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>梗图仓库 · 每天乐一下</title>
+  <meta name="description" content="收集各种沙雕、抽象、带劲梗图，每天更新让你笑到肚子痛">
+
+  <!-- Google AdSense（替换成你自己的） -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6807424554555000"
+     crossorigin="anonymous"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0f0f0f; --card: #161616; --text: #e0e0e0; --text2: #a0a0a0;
+      --accent: #ff3366; --border: #222;
+    }
+    [data-theme="light"] {
+      --bg: #f8f9fa; --card: #ffffff; --text: #212529; --text2: #6c757d;
+      --accent: #d63384; --border: #dee2e6;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Noto Sans SC', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    header {
+      padding: 1.5rem 5%;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 1rem; }
+
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 0.8rem;
+      background: linear-gradient(90deg, #ff3366, #ff6b6b, #ffcc00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle { text-align: center; color: var(--text2); margin-bottom: 2rem; }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 1.5rem 0 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 0.6rem 1.4rem;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    button:hover { background: var(--accent); color: white; border-color: var(--accent); }
+
+    .masonry {
+      columns: 320px 5;
+      column-gap: 1.2rem;
+      padding: 1rem 0;
+    }
+
+    .item {
+      break-inside: avoid;
+      margin-bottom: 1.2rem;
+      background: var(--card);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: transform 0.25s, box-shadow 0.25s;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.6s forwards;
+    }
+
+    .item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      loading: lazy;
+    }
+
+    .item p {
+      padding: 0.9rem 1rem;
+      font-size: 0.94rem;
+      color: var(--text2);
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .ad-container {
+      margin: 2.5rem auto;
+      text-align: center;
+      max-width: 728px;
+      padding: 1rem;
+      background: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      border: 1px dashed #444;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 1rem 1.5rem;
+      color: var(--text2);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border);
+    }
+
+    @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+
+    @media (max-width: 900px) { .masonry { columns: 320px 3; } }
+    @media (max-width: 600px) { .masonry { columns: 100%; } h1 { font-size: 2rem; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>个人MEME图仓库</h1>
+    <div class="subtitle">不定时更新沙雕·抽象·带劲梗图</div>
+    <div class="controls">
+      <button onclick="toggleTheme()">切换明暗模式</button>
+      <button onclick="loadMemes()">刷新梗图</button>
+      <button onclick="window.scrollTo({top:0,behavior:'smooth'})">回到顶部</button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- 顶部 AdSense 横幅广告 -->
+  <div class="ad-container">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-6807424554555000"
+         data-ad-slot="你的横幅广告单元ID"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
+
+  <div class="masonry" id="masonry"></div>
+
+  <!-- 中间内容广告 -->
+  <div class="ad-container" style="max-width:350px;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-6807424554555000"
+         data-ad-slot="你的中插广告单元ID"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
+
+</div>
+
+<footer>
+  © 2026 梗图仓库 · 纯属娱乐 · 侵删联系(b站:HE_is_NEKO)<br>
+  本站使用 Google AdSense 广告维持费用，感谢支持！
+</footer>
+
+<script>
+// 动态加载 memes.json
+async function loadMemes() {
+  const container = document.getElementById("masonry");
+  container.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text2);">加载梗图中...</p>';
+
+  try {
+    const res = await fetch('./memes.json?t=' + Date.now()); // 防止缓存
+    const memes = await res.json();
+
+    container.innerHTML = "";
+
+    memes.forEach((meme, index) => {
+      const div = document.createElement("div");
+      div.className = "item";
+      div.style.animationDelay = `${index * 80}ms`;
+
+      div.innerHTML = `
+        <img src="${meme.url}" alt="${meme.desc}" loading="lazy">
+        <p>${meme.desc}</p>
+      `;
+      container.appendChild(div);
+    });
+
+    // 重新加载 AdSense
+    if (typeof adsbygoogle !== 'undefined') {
+      adsbygoogle.push({});
+    }
+  } catch (e) {
+    container.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:3rem;color:red;">加载失败，请检查 memes.json 文件</p>';
+    console.error(e);
+  }
+}
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute("data-theme");
+  html.setAttribute("data-theme", current === "dark" ? "light" : "dark");
+  localStorage.setItem("theme", html.getAttribute("data-theme"));
+}
+
+// 初始化
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme) document.documentElement.setAttribute("data-theme", savedTheme);
+
+window.onload = loadMemes;
+</script>
+</body>
+</html>
